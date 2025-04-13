@@ -52,45 +52,48 @@
 	}
 </script>
 
-<div
-	class="widget"
-	data-tauri-drag-region
-	role="button"
-	aria-label="Pomodoro Widget"
-	tabindex="0"
->
+<div class="widget" data-tauri-drag-region role="button" aria-label="Pomodoro Widget" tabindex="0">
 	<div class="top-section" data-tauri-drag-region>
 		<div class="pomodoro-area" data-tauri-drag-region>
 			<Pomodoro state={$currentMode} />
 		</div>
 		<div class="progress-timer-area" data-tauri-drag-region>
 			<PomodoroProgress />
-			<Timer {minutes} {seconds} />
+			<Timer 
+				{minutes} 
+				{seconds} 
+				isPlaying={$timerStatus === 'running'} 
+				mode={$currentMode} 
+			/>
 		</div>
 	</div>
 
 	<div class="bottom-container">
 		<div class="bottom-section">
-			<div class="tabs-wrapper" data-tauri-drag-region>
-				<div class="tabs">
-					<button class:active={$currentMode === 'work'} on:click={() => handleTabClick('work')}
-						>РОБОТА</button
-					>
-					<button class:active={$currentMode === 'break'} on:click={() => handleTabClick('break')}
-						>ПАУЗА</button
-					>
-					<button class:active={$currentMode === 'relax'} on:click={() => handleTabClick('relax')}
-						>РЕЛАКС</button
-					>
+			<div class="border-clipper">
+				<div class="tabs-wrapper" data-tauri-drag-region>
+					<div class="tabs">
+						<button class:active={$currentMode === 'work'} on:click={() => handleTabClick('work')}
+							>РОБОТА</button
+						>
+						<button class:active={$currentMode === 'break'} on:click={() => handleTabClick('break')}
+							>ПАУЗА</button
+						>
+						<button class:active={$currentMode === 'relax'} on:click={() => handleTabClick('relax')}
+							>РЕЛАКС</button
+						>
+					</div>
 				</div>
-			</div>
-			<div class="controls-divider"></div>
-			<div class="controls-wrapper">
-				<Controls
-					isPlaying={$timerStatus === 'running'}
-					onPlayPause={handlePlayPause}
-					onReset={handleReset}
-				/>
+				<div class="controls-divider"></div>
+				
+				<div class="controls-wrapper">
+					<Controls
+						isPlaying={$timerStatus === 'running'}
+						onPlayPause={handlePlayPause}
+						onReset={handleReset}
+						onSettings={handleSettings}
+					/>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -145,9 +148,18 @@
 		position: relative;
 		z-index: 2;
 	}
-
+	.border-clipper {
+		position: relative;
+		overflow: hidden;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		filter: drop-shadow(0px 0px 1px #d9903d);
+		border-radius: 4px;
+	}
 	.bottom-container {
 		position: relative;
+		overflow: hidden;
 		left: 0;
 		bottom: 0;
 		width: 100%;
@@ -162,8 +174,8 @@
 	.bottom-section {
 		background: #f8dcb5;
 		border-radius: 8px;
+		padding: 4px;
 		overflow: hidden;
-		filter: drop-shadow(0px 0px 1px #d9903d);
 		display: flex;
 		flex-direction: column;
 	}
@@ -191,7 +203,8 @@
 		padding: 4px 10px;
 		border-radius: 16px;
 		cursor: pointer;
-		font-size: 10px;
+		font-family: 'UbuntuMono', Courier, monospace;
+		font-size: 14px;
 		font-weight: 500;
 		color: #45311f;
 		transition: all 0.2s ease;
@@ -209,7 +222,7 @@
 		border: 1px solid #a32a0c;
 		box-shadow: none;
 	}
-	
+
 	.controls-divider {
 		height: 1px;
 		background: #deb98e;

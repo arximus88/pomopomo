@@ -1,6 +1,20 @@
 <script lang="ts">
+	import { getRandomPhrase, type TimerMode } from '$lib/data/phrases';
+	
 	export let minutes = 24;
 	export let seconds = 59;
+	export let isPlaying = false;
+	export let mode: TimerMode;
+
+	let currentPhrase = '';
+
+	$: {
+		if (isPlaying) {
+			currentPhrase = getRandomPhrase(mode);
+		} else {
+			currentPhrase = '';
+		}
+	}
 
 	// Функція для форматування часу з ведучими нулями
 	const formatTime = (time: number) => time.toString().padStart(2, '0');
@@ -11,12 +25,22 @@
 		<div class="timer-display">
 			{formatTime(minutes)}:{formatTime(seconds)}
 		</div>
-		<div class="timer-label">Вйо працювати!</div>
+		<div class="timer-label" class:visible={currentPhrase}>
+			{currentPhrase}
+		</div>
 	</div>
 	<div class="timer-post"></div>
 </div>
 
 <style>
+	@font-face {
+		font-family: 'UbuntuMono';
+		src: url('/fonts/UbuntuMono-Bold.ttf') format('truetype');
+		font-weight: bold;
+		font-style: normal;
+		font-display: swap;
+	}
+
 	.timer-wrapper {
 		display: flex;
 		flex-direction: column;
@@ -39,7 +63,7 @@
 	.timer-display {
 		background-color: #fce9c9;
 		color: #ba4325;
-		font-family: 'Courier New', Courier, monospace;
+		font-family: 'UbuntuMono', Courier, monospace;
 		font-size: 24px;
 		font-weight: bold;
 		padding: 4px 10px;
@@ -50,20 +74,29 @@
 	}
 
 	.timer-label {
+		font-family: 'UbuntuMono', Courier, monospace;
 		font-size: 10px;
-		font-weight: 700;
-		color: #230f09;
+		font-weight: 500;
+		color: #fff;
 		white-space: nowrap;
 		background-color: transparent;
 		padding: 2px 0 0 0;
 		position: static;
 		transform: none;
 		z-index: auto;
+		opacity: 0;
+		height: 12px;
+		transition: opacity 0.3s ease;
+	}
+
+	.timer-label.visible {
+		opacity: 1;
+		height: 12px;
 	}
 
 	.timer-post {
-		width: 10px;
-		height: 55px;
+		width: 8px;
+		height: 40px;
 		background-color: #321f10;
 		border-radius: 0;
 		z-index: 1;
