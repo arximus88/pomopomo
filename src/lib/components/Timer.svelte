@@ -1,63 +1,72 @@
 <script lang="ts">
-  export let minutes = 24;
-  export let seconds = 59;
+	export let minutes = 24;
+	export let seconds = 59;
 
-  // Функція для форматування часу з ведучими нулями
-  const formatTime = (time: number) => time.toString().padStart(2, '0');
+	// Функція для форматування часу з ведучими нулями
+	const formatTime = (time: number) => time.toString().padStart(2, '0');
 </script>
 
-<div class="timer-container">
-  <div class="timer-display">
-    {formatTime(minutes)}:{formatTime(seconds)}
-  </div>
-  <div class="timer-label">Вйо працювати!</div>
-  <div class="timer-post"></div>
+<div class="timer-wrapper">
+	<div class="timer-container">
+		<div class="timer-display">
+			{formatTime(minutes)}:{formatTime(seconds)}
+		</div>
+		<div class="timer-label">Вйо працювати!</div>
+	</div>
+	<div class="timer-post"></div>
 </div>
 
 <style>
-  .timer-container {
-    position: relative;
-    display: inline-block;
-    margin-top: 10px;
-  }
+	.timer-wrapper {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		position: relative;
+	}
 
-  .timer-display {
-    background-color: #3a3a3a;
-    color: #ff6b6b;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 36px;
-    font-weight: bold;
-    padding: 5px 15px;
-    border-radius: 8px;
-    border: 2px solid #2c2c2c;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 2px 2px rgba(255, 255, 255, 0.2);
-    z-index: 2;
-    position: relative;
-  }
+	.timer-container {
+		position: relative;
+		display: inline-flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 2px;
+		border-radius: 10px;
+		background: #321f10;
+		z-index: 2;
+		margin-bottom: -2px;
+	}
 
-  .timer-label {
-    position: absolute;
-    bottom: -18px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 10px;
-    color: #4a4a4a;
-    white-space: nowrap;
-    background-color: #e4c9af;
-    padding: 1px 4px;
-    border-radius: 4px;
-    z-index: 3;
-  }
+	.timer-display {
+		background-color: #fce9c9;
+		color: #ba4325;
+		font-family: 'Courier New', Courier, monospace;
+		font-size: 24px;
+		font-weight: bold;
+		padding: 4px 10px;
+		border-radius: 8px;
+		border: none;
+		box-shadow: none;
+		line-height: 1;
+	}
 
-  .timer-post {
-    position: absolute;
-    bottom: -25px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 8px;
-    height: 25px;
-    background-color: #8b5e3c;
-    border-radius: 2px;
-    z-index: 1;
-  }
+	.timer-label {
+		font-size: 10px;
+		font-weight: 700;
+		color: #230f09;
+		white-space: nowrap;
+		background-color: transparent;
+		padding: 2px 0 0 0;
+		position: static;
+		transform: none;
+		z-index: auto;
+	}
+
+	.timer-post {
+		width: 10px;
+		height: 55px;
+		background-color: #321f10;
+		border-radius: 0;
+		z-index: 1;
+		position: relative;
+	}
 </style>

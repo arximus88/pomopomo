@@ -10,12 +10,12 @@
 
 <style>
   .pomodoro {
-    width: 120px;
-    height: 120px;
+    width: 80px; /* Зменшимо трохи розмір */
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: -20px; /* Невеликий негативний відступ, щоб накласти на таймер */
+    /* margin-bottom: -20px; */ /* Прибираємо */
     position: relative;
     z-index: 1;
   }
