@@ -2,78 +2,74 @@
   export let isPlaying = false;
   export let onPlayPause: () => void = () => {};
   export let onReset: () => void = () => {};
-  export let onSettings: () => void = () => {};
+  // Прибираємо кнопку налаштувань, її немає в дизайні
+  // export let onSettings: () => void = () => {}; 
 </script>
 
 <div class="controls">
   <!-- Play/Pause Button -->
-  <button on:click={onPlayPause} aria-label={isPlaying ? 'Pause' : 'Play'}>
+  <button class="control-button play-pause" on:click={onPlayPause} aria-label={isPlaying ? 'Pause' : 'Play'}>
     {#if isPlaying}
-      <!-- Pause Icon -->
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="6" y="4" width="4" height="16"/>
-        <rect x="14" y="4" width="4" height="16"/>
-      </svg>
+      <img src="/pause-circle.svg" alt="Pause" />
     {:else}
-      <!-- Play Icon -->
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polygon points="5 3 19 12 5 21 5 3"/>
-      </svg>
+      <img src="/play-circle.svg" alt="Play" />
     {/if}
   </button>
 
   <!-- Reset Button -->
-  <button on:click={onReset} aria-label="Reset">
-    <!-- Reset Icon -->
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M3 2v6h6"/>
-      <path d="M21 12A9 9 0 0 0 6 5.3L3 8"/>
-      <path d="M21 22v-6h-6"/>
-      <path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"/>
-    </svg>
+  <button class="control-button reset" on:click={onReset} aria-label="Reset">
+    <img src="/refresh-ccw-01.svg" alt="Reset" />
   </button>
 
-  <!-- Settings Button -->
-  <button on:click={onSettings} aria-label="Settings">
-    <!-- Settings Icon (Vertical Ellipsis) -->
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="1"/>
-      <circle cx="12" cy="5" r="1"/>
-      <circle cx="12" cy="19" r="1"/>
-    </svg>
-  </button>
+  <!-- Прибираємо кнопку налаштувань -->
+  <!-- <button on:click={onSettings} aria-label="Settings">...</button> -->
 </div>
 
 <style>
   .controls {
     display: flex;
     justify-content: center;
-    gap: 16px;
+    gap: 20px; /* Збільшимо відступ */
     width: 100%;
-    padding: 8px 0;
+    padding: 10px 0;
+    background-color: #f3eade; /* Фон згідно дизайну */
+    border-bottom-left-radius: 12px; /* Закруглення нижніх кутів */
+    border-bottom-right-radius: 12px;
+    margin-top: -8px; /* Невеликий нахлест на вкладки */
   }
 
-  button {
-    background: none;
+  .control-button {
+    background-color: #e4c9af; /* Колір кнопок */
     border: none;
     cursor: pointer;
-    padding: 8px;
-    border-radius: 50%;
-    color: #666;
+    padding: 12px;
+    border-radius: 10px;
+    color: #6f4e37; /* Колір іконок */
     transition: all 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    line-height: 1;
+    width: 60px; /* Фіксована ширина */
+    height: 45px; /* Фіксована висота */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
-  button:hover {
-    background: rgba(0, 0, 0, 0.05);
-    color: #333;
+  .control-button:hover {
+    background-color: #d8b89f; /* Світліший при наведенні */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
   }
 
-  svg {
-    width: 20px;
-    height: 20px;
+  .control-button:active {
+    background-color: #cba78f; /* Темніший при натисканні */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  .control-button img {
+    width: 24px; /* Розмір іконок */
+    height: 24px;
+  }
+  
+  .hidden {
+      display: none;
   }
 </style>

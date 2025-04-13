@@ -4,15 +4,15 @@
   import Pomodoro from './Pomodoro.svelte';
   import Timer from './Timer.svelte';
   import Controls from './Controls.svelte';
-  import ProgressIndicator from './ProgressIndicator.svelte';
+  // import ProgressIndicator from './ProgressIndicator.svelte'; // Прибираємо індикатор
 
   // Імпортуємо стори та функції керування
   import {
     remainingTime,
     timerStatus,
     currentMode,
-    completedPomodoros,
-    pomodorosPerCycle,
+    // completedPomodoros, // Прибираємо
+    // pomodorosPerCycle, // Прибираємо
     startTimer,
     pauseTimer,
     resetTimer,
@@ -90,89 +90,106 @@
   aria-label="Draggable Pomodoro Widget"
   tabindex="0"
 >
-  <div class="content">
-    <Pomodoro state={$currentMode} />
-    
-    <div class="timer-section">
-      <Timer {minutes} {seconds} />
-      <div class="tabs">
-        <button class:active={$currentMode === 'work'} on:click={() => handleTabClick('work')}>РОБОТА</button>
-        <button class:active={$currentMode === 'break'} on:click={() => handleTabClick('break')}>ПАУЗА</button>
-        <button class:active={$currentMode === 'relax'} on:click={() => handleTabClick('relax')}>РЕЛАКС</button>
-      </div>
-    </div>
-
-    <Controls 
-      isPlaying={$timerStatus === 'running'} 
-      onPlayPause={handlePlayPause} 
-      onReset={handleReset} 
-      onSettings={handleSettings} 
-    />
-    <ProgressIndicator completed={$completedPomodoros} total={$pomodorosPerCycle} />
+  <Pomodoro state={$currentMode} />
+  
+  <div class="timer-section">
+    <Timer {minutes} {seconds} />
   </div>
+  
+  <div class="tabs-container">
+    <div class="tabs">
+      <button class:active={$currentMode === 'work'} on:click={() => handleTabClick('work')}>РОБОТА</button>
+      <button class:active={$currentMode === 'break'} on:click={() => handleTabClick('break')}>ПАУЗА</button>
+      <button class:active={$currentMode === 'relax'} on:click={() => handleTabClick('relax')}>РЕЛАКС</button>
+    </div>
+  </div>
+
+  <Controls 
+    isPlaying={$timerStatus === 'running'} 
+    onPlayPause={handlePlayPause} 
+    onReset={handleReset} 
+    />
+  <!-- <ProgressIndicator completed={$completedPomodoros} total={$pomodorosPerCycle} /> --> <!-- Прибираємо індикатор -->
 </div>
 
 <style>
   .widget {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
-    border-radius: 12px;
-    padding: 16px;
-    width: 100%; /* Зробимо ширину 100% контейнера */
-    box-sizing: border-box; /* Включаємо padding в ширину */
+    background-color: #fbf3e9; /* Світлий фон віджета */
+    backdrop-filter: none; /* Прибираємо блюр */
+    border-radius: 16px; /* Більше закруглення */
+    padding: 0; /* Забираємо внутрішні відступи, компоненти самі їх мають */
+    width: 260px; /* Ширина згідно дизайну */
+    box-sizing: border-box; 
     user-select: none;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    cursor: grab; /* Показуємо, що можна тягнути */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    cursor: grab;
+    overflow: hidden; /* Щоб внутрішні елементи не вилазили */
+    display: flex; /* Використовуємо flex для основного контейнера */
+    flex-direction: column;
+    align-items: center; /* Центруємо все */
   }
 
   .widget:active {
      cursor: grabbing;
   }
 
-  .content {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    align-items: center;
-  }
+  /* Прибираємо старий .content, його роль виконує сам .widget */
 
   .timer-section {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    align-items: center; /* Центруємо таймер */
+    gap: 0; /* Забираємо відступ між таймером та вкладками */
+    align-items: center; 
+    margin-top: -10px; /* Нахлест таймера на помідор */
+    position: relative;
+    z-index: 2;
+  }
+  
+  .tabs-container {
+      width: calc(100% - 20px); /* Ширина мінус відступи */
+      padding: 10px;
+      background-color: #f3eade; /* Фон як у контролів */
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      margin-top: -8px; /* Нахлест на таймер */
+      position: relative;
+      z-index: 1;
   }
 
   .tabs {
     display: flex;
-    justify-content: space-between;
-    background: #f0f0f0;
+    background: #e4c9af; /* Фон вкладок */
     border-radius: 8px;
     padding: 4px;
     width: 100%;
+    box-sizing: border-box;
+    gap: 4px; /* Відступ між кнопками */
   }
 
   .tabs button {
     flex: 1;
     border: none;
-    background: none;
-    padding: 8px;
+    background: none; 
+    padding: 6px 0; /* Вертикальний відступ */
     border-radius: 6px;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
-    color: #666;
+    color: #8b5e3c; /* Коричневий текст */
     transition: all 0.2s ease;
+    text-align: center;
   }
 
   .tabs button:hover {
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.2);
   }
 
   .tabs button.active {
-    background: white;
-    color: #333;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: #d1a377; /* Активний колір */
+    color: white;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
   }
+  
+  /* Прибираємо стилі для .progress-indicator, якщо вони були */
 </style>
