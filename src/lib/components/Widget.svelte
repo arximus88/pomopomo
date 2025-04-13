@@ -113,6 +113,7 @@
 		box-sizing: border-box;
 		user-select: none;
 		overflow: visible;
+		outline: none; /* Прибираємо рамку фокусу */
 	}
 
 	.top-section {
@@ -210,6 +211,7 @@
 		transition: all 0.2s ease;
 		text-align: center;
 		text-transform: uppercase;
+		outline: none; /* Прибираємо рамку фокусу */
 	}
 
 	.tabs button:hover {
@@ -236,5 +238,17 @@
 		justify-content: center;
 		align-items: center;
 		position: relative;
+	}
+
+	:global(*) {
+		outline: none !important; /* Глобально прибираємо рамку для всіх елементів */
+	}
+
+	:global(*:focus) {
+		outline: none !important;
+	}
+
+	:global(*:focus-visible) {
+		outline: none !important;
 	}
 </style>

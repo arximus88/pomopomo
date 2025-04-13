@@ -61,6 +61,7 @@
 		align-items: center;
 		justify-content: center;
 		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		outline: none;
 	}
 
 	.play-pause {
@@ -83,6 +84,10 @@
 		box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
 	}
 
+	.control-button:focus {
+		outline: none;
+	}
+
 	.control-button img {
 		width: 24px;
 		height: 24px;
@@ -99,16 +104,20 @@
 		top: 0px;
 		transform: translateY(-50%);
 		opacity: 0.5;
-		transition: opacity 0.2s ease;
+		outline: none;
 	}
 
 	.settings-button:hover {
 		opacity: 1;
 	}
 
+	.settings-button:focus {
+		outline: none;
+	}
+
 	.settings-button img {
 		width: 20px;
 		height: 20px;
-		filter: brightness(0.6); /* Робимо іконку темнішою */
+		filter: brightness(0.6);
 	}
 </style>
