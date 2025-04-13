@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { getCurrentWindow } from '@tauri-apps/api/window';
 	import Pomodoro from './Pomodoro.svelte';
 	import Timer from './Timer.svelte';
 	import Controls from './Controls.svelte';
@@ -51,59 +50,20 @@
 	function handleTabClick(mode: TimerMode) {
 		setMode(mode);
 	}
-
-	// Логіка перетягування (залишається без змін)
-	let startX: number;
-	let startY: number;
-	let isDragging = false;
-
-	function handleMouseDown(e: MouseEvent) {
-		// Перевіряємо, чи клік був не на кнопці чи інтерактивному елементі
-		const targetElement = e.target as HTMLElement;
-		if (targetElement.closest('button, a, input, [role="button"]:not(.widget)')) {
-			return; // Не починаємо перетягування, якщо клік на кнопці
-		}
-		isDragging = true;
-		startX = e.clientX;
-		startY = e.clientY;
-		getCurrentWindow()?.startDragging();
-	}
-
-	// Додаємо обробники для скидання isDragging, якщо потрібно
-	function handleMouseUp() {
-		if (isDragging) {
-			isDragging = false;
-		}
-	}
-
-	function handleMouseLeave() {
-		if (isDragging) {
-			// Можливо, зупинити перетягування тут, якщо користувач вийшов за межі вікна
-			// getCurrentWindow()?.stopDragging(); // Цього методу немає, але логіка така
-			isDragging = false;
-		}
-	}
-
-	// onMount(() => {
-	//   // Немає потреби додавати слухачі на document для базового перетягування
-	//   return () => {};
-	// });
 </script>
 
 <div
 	class="widget"
-	on:mousedown={handleMouseDown}
-	on:mouseup={handleMouseUp}
-	on:mouseleave={handleMouseLeave}
+	data-tauri-drag-region
 	role="button"
 	aria-label="Pomodoro Widget"
 	tabindex="0"
 >
-	<div class="top-section">
-		<div class="pomodoro-area">
+	<div class="top-section" data-tauri-drag-region>
+		<div class="pomodoro-area" data-tauri-drag-region>
 			<Pomodoro state={$currentMode} />
 		</div>
-		<div class="progress-timer-area">
+		<div class="progress-timer-area" data-tauri-drag-region>
 			<PomodoroProgress />
 			<Timer {minutes} {seconds} />
 		</div>
@@ -111,15 +71,15 @@
 
 	<div class="bottom-container">
 		<div class="bottom-section">
-			<div class="tabs-wrapper">
+			<div class="tabs-wrapper" data-tauri-drag-region>
 				<div class="tabs">
-					<button class:active={$currentMode === 'work'} on:click|stopPropagation={() => handleTabClick('work')}
+					<button class:active={$currentMode === 'work'} on:click={() => handleTabClick('work')}
 						>РОБОТА</button
 					>
-					<button class:active={$currentMode === 'break'} on:click|stopPropagation={() => handleTabClick('break')}
+					<button class:active={$currentMode === 'break'} on:click={() => handleTabClick('break')}
 						>ПАУЗА</button
 					>
-					<button class:active={$currentMode === 'relax'} on:click|stopPropagation={() => handleTabClick('relax')}
+					<button class:active={$currentMode === 'relax'} on:click={() => handleTabClick('relax')}
 						>РЕЛАКС</button
 					>
 				</div>
@@ -144,18 +104,12 @@
 		height: 240px;
 		position: relative;
 		display: flex;
-    gap: 0;
 		flex-direction: column;
 		background-color: transparent;
 		border-radius: 16px;
 		box-sizing: border-box;
 		user-select: none;
-		cursor: grab;
 		overflow: visible;
-	}
-
-	.widget:active {
-		cursor: grabbing;
 	}
 
 	.top-section {
@@ -193,12 +147,16 @@
 	}
 
 	.bottom-container {
+		position: relative;
+		left: 0;
+		bottom: 0;
 		width: 100%;
 		border-radius: 12px;
 		background: #321f10;
 		padding: 4px;
 		box-sizing: border-box;
 		z-index: 0;
+		flex-shrink: 0;
 	}
 
 	.bottom-section {
