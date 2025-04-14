@@ -1,8 +1,12 @@
+<!-- Компонент для керування таймером -->
 <script lang="ts">
+	import type { TimerMode } from '$lib/stores/timer';
+	
 	export let isPlaying = false;
 	export let onPlayPause: () => void = () => {};
 	export let onReset: () => void = () => {};
 	export let onSettings: () => void = () => {};
+	export let mode: TimerMode = 'work';
 </script>
 
 <div class="controls">
@@ -10,6 +14,9 @@
 		<!-- Play/Pause Button -->
 		<button
 			class="control-button play-pause"
+			class:work={mode === 'work'}
+			class:break={mode === 'break'}
+			class:relax={mode === 'relax'}
 			on:click={onPlayPause}
 			aria-label={isPlaying ? 'Pause' : 'Play'}
 		>
@@ -64,9 +71,20 @@
 		outline: none;
 	}
 
-	.play-pause {
+	/* Кольори для різних режимів */
+	.play-pause.work {
 		background-color: #ba4325;
 		border-color: #a32a0c;
+	}
+
+	.play-pause.break {
+		background-color: #7F8A20;
+		border-color: #5C6417;
+	}
+
+	.play-pause.relax {
+		background-color: #20868A;
+		border-color: #19696C;
 	}
 
 	.reset {

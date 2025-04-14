@@ -1,3 +1,4 @@
+<!-- Компонент для відображення таймера та підбадьорливих фраз -->
 <script lang="ts">
 	import { getRandomPhrase, type TimerMode } from '$lib/data/phrases';
 	
@@ -22,7 +23,7 @@
 
 <div class="timer-wrapper">
 	<div class="timer-container">
-		<div class="timer-display">
+		<div class="timer-display" class:work={mode === 'work'} class:break={mode === 'break'} class:relax={mode === 'relax'}>
 			{formatTime(minutes)}:{formatTime(seconds)}
 		</div>
 		<div class="timer-label" class:visible={currentPhrase}>
@@ -62,7 +63,6 @@
 
 	.timer-display {
 		background-color: #fce9c9;
-		color: #ba4325;
 		font-family: 'UbuntuMono', Courier, monospace;
 		font-size: 24px;
 		font-weight: bold;
@@ -71,6 +71,19 @@
 		border: none;
 		box-shadow: none;
 		line-height: 1;
+	}
+
+	/* Кольори для різних режимів */
+	.timer-display.work {
+		color: #ba4325;
+	}
+
+	.timer-display.break {
+		color: #7F8A20;
+	}
+
+	.timer-display.relax {
+		color: #20868A;
 	}
 
 	.timer-label {

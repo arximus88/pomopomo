@@ -1,3 +1,4 @@
+<!-- Компонент для відображення пана помідора -->
 <script lang="ts">
   // Визначаємо можливі стани помідора
   export let state: 'work' | 'break' | 'relax' = 'work';
@@ -5,25 +6,30 @@
 </script>
 
 <div class="pomodoro {state}">
-  <img src="/vector-pomodoro.svg" alt="Pomodoro" class="pomodoro-icon" />
+  {#if state === 'work'}
+    <img src="/vector-pomodoro-work.svg" alt="Pomodoro Work" class="pomodoro-icon" />
+  {:else if state === 'break'}
+    <img src="/vector-pomodoro-pause.svg" alt="Pomodoro Break" class="pomodoro-icon" />
+  {:else if state === 'relax'}
+    <img src="/vector-pomodoro-relax.svg" alt="Pomodoro Relax" class="pomodoro-icon" />
+  {/if}
 </div>
 
 <style>
   .pomodoro {
-    width: 80px; /* Зменшимо трохи розмір */
-    height: auto;
+    width: 80px;
+    height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
-    /* margin-bottom: -20px; */ /* Прибираємо */
     position: relative;
     z-index: 1;
   }
 
   .pomodoro-icon {
     width: 100%;
-    height: auto;
-    /* TODO: Додати стилі анімацій згідно дизайну */
+    height: 100%;
+    object-fit: contain;
   }
 
   /* Приберемо старі анімації для placeholder */

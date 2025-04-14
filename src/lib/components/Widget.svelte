@@ -1,3 +1,4 @@
+<!-- Головний компонент для відображення додатку -->
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Pomodoro from './Pomodoro.svelte';
@@ -92,6 +93,7 @@
 						onPlayPause={handlePlayPause}
 						onReset={handleReset}
 						onSettings={handleSettings}
+						mode={$currentMode}
 					/>
 				</div>
 			</div>
@@ -219,10 +221,23 @@
 	}
 
 	.tabs button.active {
-		background: #ba4325;
 		color: #fce9c9;
+	}
+
+	/* Різні кольори для активних вкладок */
+	.tabs button.active:nth-child(1) {
+		background: #ba4325;
 		border: 1px solid #a32a0c;
-		box-shadow: none;
+	}
+
+	.tabs button.active:nth-child(2) {
+		background: #7F8A20;
+		border: 1px solid #5C6417;
+	}
+
+	.tabs button.active:nth-child(3) {
+		background: #20868A;
+		border: 1px solid #19696C;
 	}
 
 	.controls-divider {
@@ -245,10 +260,6 @@
 	}
 
 	:global(*:focus) {
-		outline: none !important;
-	}
-
-	:global(*:focus-visible) {
 		outline: none !important;
 	}
 </style>
