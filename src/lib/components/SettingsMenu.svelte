@@ -198,7 +198,7 @@
 	}
 	
 	.close-button:hover {
-		background-color: rgba(0, 0, 0, 0.1);
+		background-color: rgba(255, 255, 255, 0.32);
 	}
 	
 	.settings-content {
@@ -243,12 +243,14 @@
 	
 	.input-group input {
 		width: 60px;
-		padding: 6px;
+		padding: 8px;
+		padding-left: 12px;
 		border: 1px solid #deb98e;
 		border-radius: 6px;
 		background-color: #fff;
 		font-family: 'UbuntuMono', Courier, monospace;
-		text-align: center;
+		font-size: 16px;
+		text-align: left;
 	}
 	
 	/* Стилі для фокусу */

@@ -1,12 +1,12 @@
 <!-- Компонент для керування таймером -->
 <script lang="ts">
-	import type { TimerMode } from '$lib/stores/timer';
+	import type { TimerMode } from '$lib/stores/timer'; 
 	
-	export let isPlaying = false;
-	export let onPlayPause: () => void = () => {};
-	export let onReset: () => void = () => {};
-	export let onSettings: () => void = () => {};
-	export let mode: TimerMode = 'work';
+	export let isPlaying = false; // Додано нову властивість для кнопки паузи
+	export let onPlayPause: () => void = () => {}; // Додано нову подію для кнопки паузи
+	export let onReset: () => void = () => {}; // Додано нову подію для кнопки скидання
+	export let onSettings: () => void = () => {}; // Додано нову подію для кнопки налаштувань
+	export let mode: TimerMode = 'work'; // Додано нову властивість для режиму таймеру
 </script>
 
 <div class="controls">

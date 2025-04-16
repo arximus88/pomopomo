@@ -64,7 +64,7 @@
 	.timer-display {
 		background-color: #fce9c9;
 		font-family: 'UbuntuMono', Courier, monospace;
-		font-size: 24px;
+		font-size: 32px;
 		font-weight: bold;
 		padding: 4px 10px;
 		border-radius: 8px;
