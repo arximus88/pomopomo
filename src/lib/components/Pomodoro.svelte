@@ -11,7 +11,7 @@
   {:else if state === 'break'}
     <img src="/vector-pomodoro-pause.svg" alt="Pomodoro Break" class="pomodoro-icon" />
   {:else if state === 'relax'}
-    <img src="/vector-pomodoro-relax.svg" alt="Pomodoro Relax" class="pomodoro-icon" />
+    <img src="/vector-pomodoro-relax-more.svg" alt="Pomodoro Relax" class="pomodoro-icon" />
   {/if}
 </div>
 

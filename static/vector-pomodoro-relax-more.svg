@@ -1,0 +1,194 @@
+<svg width="800" height="800" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <style>
+        /* Base animations */
+        @keyframes body-sway {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-2deg); } /* Increased sway */
+            75% { transform: rotate(2deg); } /* Increased sway */
+        }
+        
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); } /* Increased breathe scale */
+        }
+        
+        @keyframes sway {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-4deg); } /* Increased leg sway */
+            75% { transform: rotate(4deg); } /* Increased leg sway */
+        }
+        
+        @keyframes blink {
+            0%, 45%, 55%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(0.1); }
+        }
+        
+        @keyframes swing {
+            0%, 100% { transform: rotate(0deg); }
+            30% { transform: rotate(-6deg); } /* Increased hand swing */
+            70% { transform: rotate(6deg); } /* Increased hand swing */
+        }
+        
+        @keyframes leaf-sway {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-3deg); } /* Increased leaf sway */
+            75% { transform: rotate(3deg); } /* Increased leaf sway */
+        }
+        
+        /* Apply animations to elements */
+        #vector-pomodoro {
+            animation: body-sway 6s ease-in-out infinite;
+            transform-origin: bottom center;
+            transform-box: fill-box;
+        }
+        
+        #body {
+            animation: breathe 4s ease-in-out infinite;
+            transform-origin: center;
+            transform-box: fill-box;
+        }
+        
+        /* Modified leg animations to be more subtle to keep it grounded */
+        #leg-1 {
+            animation: sway 4s ease-in-out infinite;
+            transform-origin: bottom center;
+            transform-box: fill-box;
+        }
+        
+        #leg-2 {
+            animation: sway 4s ease-in-out infinite 0.5s;
+            transform-origin: bottom center;
+            transform-box: fill-box;
+        }
+        
+        /* Feet stay fixed */
+        #foot-1, #foot-2 {
+            animation: none;
+        }
+        
+        #hand-1 {
+            animation: swing 4.5s ease-in-out infinite 0.3s;
+            transform-origin: top center;
+            transform-box: fill-box;
+        }
+        
+        #hand-2 {
+            animation: swing 4.5s ease-in-out infinite 0.8s;
+            transform-origin: top center;
+            transform-box: fill-box;
+        }
+        
+        #eye-l, #eye-r {
+            animation: blink 4s ease-in-out infinite;
+            transform-origin: center;
+            transform-box: fill-box;
+        }
+        
+        #mouth {
+            animation: sway 6s ease-in-out infinite;
+            transform-origin: center;
+            transform-box: fill-box;
+        }
+        
+        #leaf {
+            animation: leaf-sway 5s ease-in-out infinite;
+            transform-origin: bottom center;
+            transform-box: fill-box;
+        }
+        
+        #shine {
+            animation: breathe 3s ease-in-out infinite 1s;
+            transform-origin: center;
+            transform-box: fill-box;
+        }
+    </style>
+    <g id="vector-pomodoro-relax">
+        <g id="vector-pomodoro">
+            <g id="tomato">
+                <g id="leg-1">
+                    <path id="leg-1_2"
+                        d="M266.37 768.343C286.025 740.095 290.295 708.571 278.417 674.914C277.501 672.318 279.305 669.509 282.055 669.384L327.74 667.309C329.443 667.232 331.016 668.25 331.619 669.845C348.463 714.418 339.731 751.818 304.492 780.323C294.754 788.2 283.269 786.038 267.157 773.839C265.444 772.542 265.143 770.107 266.37 768.343Z"
+                        fill="#D94C1D" />
+                    <path id="leg-1-stroke"
+                        d="M276.431 669.639C289.94 703.385 289.033 738.777 271.451 767.911C268.676 772.509 269.334 778.675 273.915 781.48C287.058 789.529 295.775 787.374 304.492 780.323C340.431 751.252 348.8 712.929 330.585 667.18"
+                        stroke="#321707" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
+                    <path id="foot-1"
+                        d="M343.001 788.193C343.001 797.974 323.897 799.999 300.33 799.999C276.763 799.999 254.481 796.498 254.481 786.717C251.757 766.056 276.763 752.774 300.33 752.774C323.897 752.774 348.308 762.121 343.001 788.193Z"
+                        fill="#321707" />
+                </g>
+                <g id="leg-2">
+                    <path id="leg-2_2"
+                        d="M482.572 767.329C500.013 739.23 486.8 706.824 470.121 673.049C468.857 670.489 470.586 667.456 473.434 667.26L508.39 664.851C509.585 664.768 510.768 665.237 511.579 666.118C550.18 708.089 546.959 752.634 519.482 776.654C518.941 777.127 518.27 777.437 517.559 777.545C505.058 779.446 495.337 777.758 484.36 773.409C481.978 772.465 481.22 769.506 482.572 767.329Z"
+                        fill="#D94C1D" />
+                    <path id="leg-2-stroke"
+                        d="M467.446 667.672C483.999 700.752 498.625 732.677 486.087 760.72C483.473 766.568 485.292 774.059 491.436 775.874C499.264 778.188 506.89 778.945 515.93 777.775C517.712 777.544 519.386 776.771 520.708 775.553C547.343 751.018 549.653 706.465 510.277 664.721"
+                        stroke="#321707" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
+                    <path id="foot-2"
+                        d="M567.385 785.734C567.385 795.515 546.666 797.54 521.108 797.54C495.55 797.54 471.385 794.039 471.385 784.258C468.431 763.597 495.55 750.315 521.108 750.315C546.666 750.315 573.785 756.71 567.385 785.734Z"
+                        fill="#321707" />
+                </g>
+                <g id="body">
+                    <g id="body_2">
+                        <path
+                            d="M708.062 416.298C708.062 565.876 571.273 688.695 400.492 688.695C229.712 688.695 92.9231 565.876 92.9231 416.298C92.9231 266.719 229.712 143.9 400.492 143.9C571.273 143.9 708.062 266.719 708.062 416.298Z"
+                            fill="#D94C1D" />
+                        <path
+                            d="M708.062 416.298C708.062 565.876 571.273 688.695 400.492 688.695C229.712 688.695 92.9231 565.876 92.9231 416.298C92.9231 266.719 229.712 143.9 400.492 143.9C571.273 143.9 708.062 266.719 708.062 416.298Z"
+                            fill="url(#paint0_radial_57_12)" fill-opacity="0.2" />
+                        <path
+                            d="M708.062 416.298C708.062 565.876 571.273 688.695 400.492 688.695C229.712 688.695 92.9231 565.876 92.9231 416.298C92.9231 266.719 229.712 143.9 400.492 143.9C571.273 143.9 708.062 266.719 708.062 416.298Z"
+                            stroke="#321707" stroke-width="16" />
+                    </g>
+                    <path id="shine"
+                        d="M579.2 244.124C576.637 247.951 569.194 242.231 562.461 237.729C555.729 233.227 551.975 229.638 554.539 225.811C557.102 221.983 564.637 222.53 571.369 227.032C578.102 231.534 581.763 240.297 579.2 244.124Z"
+                        fill="#E86227" />
+                </g>
+                <path id="leaf"
+                    d="M374.892 139.984C311.877 36.6794 216.862 77.5093 202.092 101.614C258.215 110.96 274.462 163.596 348.308 156.709C279.877 168.515 287.262 223.119 287.262 223.119C287.262 223.119 369.477 223.119 405.908 178.846C444.308 213.773 475.815 220.659 517.661 223.119C517.661 164.088 461.046 156.709 461.046 156.709C517.661 156.709 544.246 109.484 581.169 106.041C562.461 81.4446 485.662 40.1229 419.2 139.984C445.292 -7.59407 337.969 -10.0536 333.046 30.2843C351.262 51.4371 387.692 93.7426 374.892 139.984Z"
+                    fill="#7F8A20" stroke="#321707" stroke-width="16" stroke-linejoin="round" />
+                <path id="bandage"
+                    d="M132.969 271.18C134.017 269.945 135.512 269.292 137.126 269.436C157.856 271.286 304.006 284.041 403.446 284.955C501.639 285.857 647.566 274.834 667.102 273.32C668.536 273.209 669.889 273.717 670.896 274.745C686.662 290.84 699.946 316.293 699.488 342.18C699.449 344.414 697.866 346.251 695.667 346.648C677.019 350.006 586.182 364.303 403.446 361.695C221.571 359.099 128.446 340.898 108.658 336.553C106.293 336.033 104.727 333.852 104.963 331.443C107.729 303.3 117.992 288.825 132.969 271.18Z"
+                    fill="#FCE9C9" stroke="#321707" stroke-width="16" stroke-linejoin="round" />
+                <g id="face">
+                    <ellipse id="eye-l" cx="328.616" cy="448.274" rx="27.0769" ry="27.0559" fill="#321707" />
+                    <ellipse id="eye-r" cx="524.554" cy="446.306" rx="27.0769" ry="27.0559" fill="#321707" />
+                    <path id="mouth" d="M459.473 502.534C435.377 525.55 421.753 527.232 397.341 509.607"
+                        stroke="#321707" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
+                </g>
+                <g id="hand-1">
+                    <path id="hand-1_2"
+                        d="M295.686 610.297C271.622 594.236 265.699 578.885 263.204 550.457C262.945 547.507 259.714 545.784 257.151 547.268L213.819 572.356C212.685 573.012 211.938 574.186 211.86 575.494C209.798 610.184 228.066 640.054 243.91 648.155C259.67 656.213 289.932 648.082 297.403 614.397C297.754 612.816 297.033 611.196 295.686 610.297Z"
+                        fill="url(#paint1_linear_57_12)" />
+                    <path id="hand-1-stroke"
+                        d="M262.709 544.05C264.836 575.216 269.443 591.586 292.381 608.013C295.673 610.37 297.543 614.389 296.412 618.276C287.56 648.7 259.046 655.894 243.91 648.155C227.749 639.891 209.065 608.978 212.009 573.404"
+                        stroke="#321707" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
+                </g>
+                <g id="hand-2">
+                    <path id="hand-2_2"
+                        d="M527.66 613.929C552.076 598.185 559.421 590.761 562.064 562.676C562.316 560 565.037 558.248 567.547 559.208L609.062 575.072C610.5 575.621 611.503 576.951 611.588 578.488C613.493 612.837 596.128 639.172 580.345 647.231C564.583 655.279 533.432 651.477 525.933 618.013C525.579 616.433 526.299 614.807 527.66 613.929Z"
+                        fill="url(#paint2_linear_57_12)" />
+                    <path id="hand-2-stroke"
+                        d="M562.5 557.279C560.357 588.423 554.161 596.513 531.028 611.737C527.647 613.963 525.781 618.01 526.944 621.887C535.9 651.763 565.213 654.957 580.345 647.231C596.512 638.976 614.338 611.547 611.415 575.97"
+                        stroke="#321707" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
+                </g>
+            </g>
+        </g>
+    </g>
+    <defs>
+        <radialGradient id="paint0_radial_57_12" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse"
+            gradientTransform="translate(400 434.991) rotate(89.8922) scale(261.705 294.532)">
+            <stop stop-color="#FBE9CA" />
+            <stop offset="1" stop-color="#DE1A00" />
+        </radialGradient>
+        <linearGradient id="paint1_linear_57_12" x1="230.21" y1="562.866" x2="277.634" y2="644.776"
+            gradientUnits="userSpaceOnUse">
+            <stop stop-color="#D94C1D" stop-opacity="0" />
+            <stop offset="0.1" stop-color="#DC5024" />
+        </linearGradient>
+        <linearGradient id="paint2_linear_57_12" x1="594.666" y1="566.26" x2="547.66" y2="647.34"
+            gradientUnits="userSpaceOnUse">
+            <stop stop-color="#D94C1D" stop-opacity="0" />
+            <stop offset="0.1" stop-color="#DC5024" />
+        </linearGradient>
+    </defs>
+</svg>

@@ -47,7 +47,6 @@
 		width: 100%;
 		background-color: #f6dfbf;
 		border-radius: 12px;
-		padding: 8px;
 		position: relative;
 	}
 

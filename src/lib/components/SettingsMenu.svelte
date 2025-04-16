@@ -132,7 +132,7 @@
 				<div aria-labelledby="about-title">
 					<p>Pomopomo - це простий таймер для техніки Pomodoro.</p>
 					<p>Версія: 0.1.0</p>
-					<p>Автор: Борис Харченко</p>
+					<p>Автор: kharchenko.work</p>
 				</div>
 			</div>
 		</div>
@@ -146,7 +146,7 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-color: rgba(0, 0, 0, 0.5);
+		overflow: hidden;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -156,11 +156,12 @@
 	.settings-menu {
 		background-color: #fce9c9;
 		border-radius: 12px;
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-		width: 300px;
+		box-shadow: 0 0px 16px rgba(0, 0, 0, 0.44);
 		max-width: 90%;
 		max-height: 90vh;
 		overflow-y: auto;
+		scrollbar-color: #deb98e #efcfa5;
+		scrollbar-width: thin;
 		border: 2px solid #deb98e;
 	}
 	
