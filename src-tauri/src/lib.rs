@@ -39,10 +39,21 @@ pub fn run() -> Result<()> {
         .setup(|app| { // Створюємо трей всередині .setup()
             info!("Setting up tray...");
             let menu = create_tray_menu(app.handle())?;
-            let _tray = TrayIconBuilder::new()
+            
+            // Створюємо TrayIconBuilder один раз
+            let mut tray_builder = TrayIconBuilder::new()
                 .menu(&menu)
-                .tooltip("PomoPomo Timer") // Додамо підказку
-                // .icon(app.default_window_icon().cloned()) // TODO: Додати іконку (потрібно обробити Option)
+                .tooltip("PomoPomo Timer");
+
+            // Спробуємо встановити іконку
+            if let Some(icon) = app.default_window_icon().cloned() {
+                tray_builder = tray_builder.icon(icon);
+            } else {
+                error!("Could not get default window icon for tray");
+                // Можна встановити резервну іконку тут, якщо потрібно
+            }
+
+            let _tray = tray_builder
                 .on_menu_event(|app, event| {
                     info!("Tray menu item clicked: {:?}", event.id);
                     match event.id.as_ref() {
@@ -104,7 +115,7 @@ pub fn run() -> Result<()> {
             }
             RunEvent::ExitRequested { api, .. } => {
                  // Дозволяємо додатку закритися, якщо це ініційовано з меню трея або іншим чином
-                api.prevent_exit();
+                // api.prevent_exit(); // Прибираємо блокування виходу
             }
             _ => {}
         });
