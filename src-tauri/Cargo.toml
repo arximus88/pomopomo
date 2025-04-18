@@ -20,11 +20,7 @@ tauri-build = { version = "2.1.1", features = [] }
 [dependencies]
 tauri = { version = "2.4.1", features = [
     "tray-icon",
-    "macos-private-api",
-    # Некоректні/непотрібні фічі для базового tauri:
-    # "window-hide",
-    # "window-show",
-    # "window-set-focus"
+    "macos-private-api"
 ] }
 # Використовуємо версії з crates.io замість git
 tauri-plugin-log = { version = "2.0.0", features = ["colored"] }

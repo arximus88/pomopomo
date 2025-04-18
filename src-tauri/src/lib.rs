@@ -11,10 +11,12 @@ fn create_tray_menu(app: &AppHandle<Wry>) -> Result<Menu<Wry>> {
     let quit = MenuItem::with_id(app, "quit", "Quit PomoPomo", true, None::<&str>)?;
     let hide = MenuItem::with_id(app, "hide", "Hide", true, None::<&str>)?;
     let show = MenuItem::with_id(app, "show", "Show", true, None::<&str>)?;
+    let settings = MenuItem::with_id(app, "settings", "Settings", true, None::<&str>)?;
+    let play_pause = MenuItem::with_id(app, "play_pause", "Play/Pause", true, None::<&str>)?;
     let separator = PredefinedMenuItem::separator(app)?;
     
     // Передаємо посилання безпосередньо
-    Menu::with_items(app, &[&show, &hide, &separator, &quit])
+    Menu::with_items(app, &[&show, &hide, &settings, &play_pause, &separator, &quit])
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -33,6 +35,9 @@ pub fn run() -> Result<()> {
                     })
                 ])
                 .timezone_strategy(TimezoneStrategy::UseLocal)
+                // RotationStrategy може мати інші варіанти в Tauri 2.x
+                // закоментуємо це, поки не перевіримо документацію
+                //.rotation_strategy(RotationStrategy::Daily)
                 .level(log::LevelFilter::Info)
                 .build(),
         )
@@ -53,7 +58,8 @@ pub fn run() -> Result<()> {
                 // Можна встановити резервну іконку тут, якщо потрібно
             }
 
-            let _tray = tray_builder
+            // Створюємо tray та зберігаємо посилання на нього в стані додатку
+            let tray = tray_builder
                 .on_menu_event(|app, event| {
                     info!("Tray menu item clicked: {:?}", event.id);
                     match event.id.as_ref() {
@@ -62,17 +68,59 @@ pub fn run() -> Result<()> {
                         }
                         "hide" | "show" => { // Об'єднуємо логіку для hide/show
                             if let Some(window) = app.get_webview_window("main") {
+                                info!("Handling {}", event.id.as_ref());
+                                
+                                // Використовуємо нативні методи замість JavaScript
                                 if event.id.as_ref() == "hide" {
-                                    let _ = window.hide();
+                                    if let Err(e) = window.hide() {
+                                        error!("Failed to hide window: {}", e);
+                                    }
                                 } else {
-                                    let _ = window.show();
-                                    let _ = window.set_focus();
+                                    if let Err(e) = window.show() {
+                                        error!("Failed to show window: {}", e);
+                                    }
+                                    if let Err(e) = window.set_focus() {
+                                        error!("Failed to focus window: {}", e);
+                                    }
                                 }
                             } else {
                                 error!("Could not get main window for hide/show");
                             }
                         }
-                        // TODO: Обробка Play/Pause, Reset
+                        "settings" => {
+                            // Викликаємо функцію відкриття налаштувань
+                            if let Some(window) = app.get_webview_window("main") {
+                                info!("Opening settings from tray menu");
+                                
+                                // Показуємо вікно, якщо воно приховане
+                                if let Err(e) = window.show() {
+                                    error!("Failed to show window: {}", e);
+                                }
+                                if let Err(e) = window.set_focus() {
+                                    error!("Failed to focus window: {}", e);
+                                }
+                                
+                                // Відправляємо подію через JavaScript
+                                if let Err(e) = window.eval("window.dispatchEvent(new CustomEvent('pomopomo://open-settings'))") {
+                                    error!("Failed to execute settings script: {}", e);
+                                }
+                            } else {
+                                error!("Could not get main window for settings");
+                            }
+                        }
+                        "play_pause" => {
+                            // Викликаємо функцію паузи/продовження
+                            if let Some(window) = app.get_webview_window("main") {
+                                info!("Toggling play/pause from tray menu");
+                                
+                                // Відправляємо подію через JavaScript
+                                if let Err(e) = window.eval("window.dispatchEvent(new CustomEvent('pomopomo://toggle-play-pause'))") {
+                                    error!("Failed to execute play/pause script: {}", e);
+                                }
+                            } else {
+                                error!("Could not get main window for play/pause");
+                            }
+                        }
                         _ => { info!("Unhandled menu item: {:?}", event.id); }
                     }
                 })
@@ -88,10 +136,16 @@ pub fn run() -> Result<()> {
                             if let Some(window) = app.get_webview_window("main") {
                                 info!("Tray left click: Toggling window visibility");
                                 if window.is_visible().unwrap_or(false) {
-                                    let _ = window.hide();
+                                    if let Err(e) = window.hide() {
+                                        error!("Failed to hide window: {}", e);
+                                    }
                                 } else {
-                                    let _ = window.show();
-                                    let _ = window.set_focus();
+                                    if let Err(e) = window.show() {
+                                        error!("Failed to show window: {}", e);
+                                    }
+                                    if let Err(e) = window.set_focus() {
+                                        error!("Failed to focus window: {}", e);
+                                    }
                                 }
                             } else {
                                 error!("Could not get main window for left click toggle");
@@ -101,6 +155,9 @@ pub fn run() -> Result<()> {
                     }
                 })
                 .build(app.handle())?;
+                
+            // Зберігаємо посилання на tray icon у стані додатку
+            app.manage(tray);
             info!("Tray setup complete.");
             Ok(())
         })
@@ -112,10 +169,6 @@ pub fn run() -> Result<()> {
                 // api.prevent_close();
                 // Краще залишити цей обробник у .setup(), якщо можливо
                 // Або використовувати плагін window-state
-            }
-            RunEvent::ExitRequested { api, .. } => {
-                 // Дозволяємо додатку закритися, якщо це ініційовано з меню трея або іншим чином
-                // api.prevent_exit(); // Прибираємо блокування виходу
             }
             _ => {}
         });

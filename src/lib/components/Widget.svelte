@@ -6,6 +6,7 @@
 	import Controls from './Controls.svelte';
 	import PomodoroProgress from './PomodoroProgress.svelte';
 	import SettingsMenu from './SettingsMenu.svelte';
+	import { initTauriIntegration } from '$lib/tauri-integration';
 	// import ProgressIndicator from './ProgressIndicator.svelte'; // Прибираємо індикатор
 
 	// Імпортуємо стори та функції керування
@@ -74,6 +75,27 @@
 	}
 
 	// Функції для оновлення налаштувань тривалості - ВИДАЛЕНО
+
+	// Для зберігання функції відписки від подій
+	let unlistenTauriEvents: (() => void) | undefined;
+
+	// Ініціалізуємо інтеграцію з Tauri під час монтування компонента
+	onMount(() => {
+		console.log('Widget mounted, initializing Tauri integration');
+		try {
+			unlistenTauriEvents = initTauriIntegration(handleSettings);
+			console.log('Tauri integration initialized successfully');
+		} catch (error) {
+			console.error('Failed to initialize Tauri integration:', error);
+		}
+
+		// Функція для очищення при розмонтуванні
+		return () => {
+			if (unlistenTauriEvents) {
+				unlistenTauriEvents();
+			}
+		};
+	});
 </script>
 
 <div class="widget" data-tauri-drag-region role="button" aria-label="Pomodoro Widget" tabindex="0">
