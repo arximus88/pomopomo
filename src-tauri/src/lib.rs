@@ -1,10 +1,10 @@
+use log::{error, info};
 use tauri::{
     menu::{Menu, MenuItem, PredefinedMenuItem},
     tray::{TrayIconBuilder, TrayIconEvent},
-    Manager, AppHandle, RunEvent, Result, Wry,
+    AppHandle, Manager, Result, RunEvent, Wry,
 };
 use tauri_plugin_log::{Target, TargetKind, TimezoneStrategy};
-use log::{info, error};
 
 // Функція для створення меню трея
 fn create_tray_menu(app: &AppHandle<Wry>) -> Result<Menu<Wry>> {
@@ -14,14 +14,18 @@ fn create_tray_menu(app: &AppHandle<Wry>) -> Result<Menu<Wry>> {
     let settings = MenuItem::with_id(app, "settings", "Settings", true, None::<&str>)?;
     let play_pause = MenuItem::with_id(app, "play_pause", "Play/Pause", true, None::<&str>)?;
     let separator = PredefinedMenuItem::separator(app)?;
-    
+
     // Передаємо посилання безпосередньо
-    Menu::with_items(app, &[&show, &hide, &settings, &play_pause, &separator, &quit])
+    Menu::with_items(
+        app,
+        &[&show, &hide, &settings, &play_pause, &separator, &quit],
+    )
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() -> Result<()> {
     tauri::Builder::default()
+        .plugin(tauri_plugin_store::Builder::new().build())
         .plugin(tauri_plugin_shell::init())
         .plugin(
             tauri_plugin_log::Builder::default()
@@ -69,7 +73,6 @@ pub fn run() -> Result<()> {
                         "hide" | "show" => { // Об'єднуємо логіку для hide/show
                             if let Some(window) = app.get_webview_window("main") {
                                 info!("Handling {}", event.id.as_ref());
-                                
                                 // Використовуємо нативні методи замість JavaScript
                                 if event.id.as_ref() == "hide" {
                                     if let Err(e) = window.hide() {
@@ -91,15 +94,13 @@ pub fn run() -> Result<()> {
                             // Викликаємо функцію відкриття налаштувань
                             if let Some(window) = app.get_webview_window("main") {
                                 info!("Opening settings from tray menu");
-                                
                                 // Показуємо вікно, якщо воно приховане
                                 if let Err(e) = window.show() {
                                     error!("Failed to show window: {}", e);
                                 }
                                 if let Err(e) = window.set_focus() {
                                     error!("Failed to focus window: {}", e);
-                                }
-                                
+                                }    
                                 // Відправляємо подію через JavaScript
                                 if let Err(e) = window.eval("window.dispatchEvent(new CustomEvent('pomopomo://open-settings'))") {
                                     error!("Failed to execute settings script: {}", e);
@@ -112,7 +113,6 @@ pub fn run() -> Result<()> {
                             // Викликаємо функцію паузи/продовження
                             if let Some(window) = app.get_webview_window("main") {
                                 info!("Toggling play/pause from tray menu");
-                                
                                 // Відправляємо подію через JavaScript
                                 if let Err(e) = window.eval("window.dispatchEvent(new CustomEvent('pomopomo://toggle-play-pause'))") {
                                     error!("Failed to execute play/pause script: {}", e);
@@ -172,6 +172,6 @@ pub fn run() -> Result<()> {
             }
             _ => {}
         });
-    
+
     Ok(())
 }

@@ -7,7 +7,6 @@
 	import PomodoroProgress from './PomodoroProgress.svelte';
 	import SettingsMenu from './SettingsMenu.svelte';
 	import { initTauriIntegration } from '$lib/tauri-integration';
-	// import ProgressIndicator from './ProgressIndicator.svelte'; // Прибираємо індикатор
 
 	// Імпортуємо стори та функції керування
 	import {

@@ -8,6 +8,7 @@
   const tomatoIcon = '🍅';
 </script>
 
+<!-- Виводимо помідори відповідно до кількості завершених помідорів -->
 <div class="progress-container">
   {#each Array($completedPomodoros) as _, i}
     <span class="pomodoro-icon">{tomatoIcon}</span>

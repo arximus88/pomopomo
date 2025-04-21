@@ -19,10 +19,10 @@ export const currentDuration = derived(
   [currentMode, workDuration, breakDuration, relaxDuration],
   ([$currentMode, $workDuration, $breakDuration, $relaxDuration]) => {
     switch ($currentMode) {
-      case 'work': return $workDuration;
-      case 'break': return $breakDuration;
-      case 'relax': return $relaxDuration;
-      default: return $workDuration;
+      case 'work': return $workDuration; // Робочий режим
+      case 'break': return $breakDuration; // Пауза
+      case 'relax': return $relaxDuration; // Довга пауза
+      default: return $workDuration; // Якщо не відповідає жодному режиму, повертаємо робочий режим
     }
   }
 );
@@ -41,6 +41,7 @@ export const pomodorosPerCycle = writable(4);
 
 let timerInterval: number | null = null;
 
+// Функція для оновлення часу
 function tick() {
   remainingTime.update(time => {
     if (time > 0) {
@@ -55,6 +56,7 @@ function tick() {
   });
 }
 
+// Зупинка таймера
 function stopInterval() {
   if (timerInterval !== null) {
     clearInterval(timerInterval);
@@ -62,6 +64,7 @@ function stopInterval() {
   }
 }
 
+// Перехід до наступного режиму
 function switchToNextMode() {
   const current = get(currentMode);
   const completed = get(completedPomodoros);
@@ -84,6 +87,7 @@ function switchToNextMode() {
 
 // --- Функції для керування таймером ---
 
+// Запуск таймера
 export function startTimer() {
   if (get(timerStatus) === 'running') return; // Вже запущено
 
@@ -93,6 +97,7 @@ export function startTimer() {
   }
 }
 
+// Пауза таймера
 export function pauseTimer() {
   if (get(timerStatus) !== 'running') return; // Не запущено або вже на паузі
 
@@ -100,6 +105,7 @@ export function pauseTimer() {
   stopInterval(); // Зупиняємо інтервал
 }
 
+// Скидання таймера
 export function resetTimer() {
   stopInterval(); // Зупиняємо інтервал
   timerStatus.set('idle');

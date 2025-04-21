@@ -1,7 +1,7 @@
 [package]
 name = "pomopomo-app"
-version = "0.0.0"
-description = "A Tauri App"
+version = "0.1.0"
+description = "A Tauri contained PomoPomo App"
 authors = ["you"]
 license = ""
 repository = ""
@@ -28,6 +28,7 @@ tauri-plugin-shell = "2.0.0"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 log = "0.4"
+tauri-plugin-store = "2"
 
 [features]
 custom-protocol = ["tauri/custom-protocol"]
