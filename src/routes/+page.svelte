@@ -19,9 +19,9 @@
     width: 100vw;
     height: 100vh;
     display: flex;
-    /* Не центруємо, віджет сам займає всю ширину */
-    /* justify-content: center; */
-    /* align-items: center; */
+    /* Центруємо віджет, щоб він був посередині вікна */
+    justify-content: center;
+    align-items: center;
     background: transparent;
     padding: 0; /* Забираємо зайві відступи, якщо є */
   }

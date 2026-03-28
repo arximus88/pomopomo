@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bun tauri dev:*)",
+      "Bash(timeout 10s bun tauri dev:*)",
+      "Bash(bun run:*)",
+      "Bash(timeout:*)",
+      "Bash(start http://localhost:5173)",
+      "Bash(git restore:*)",
+      "Bash(rm:*)"
+    ],
+    "deny": []
+  }
+}
